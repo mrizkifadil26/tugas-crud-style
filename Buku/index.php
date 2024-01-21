@@ -70,21 +70,21 @@ $katalog = mysqli_query($connect, "SELECT * FROM katalog");
         echo "<td>" . $buku_data['nama_katalog'] . "</td>";
         echo "<td>" . $buku_data['qty_stok'] . "</td>";
         echo "<td>" . $buku_data['harga_pinjam'] . "</td>";
-        echo "<td><a class='btn btn-primary' data-bs-target='staticBackdrop'>Edit</a> | <a class='btn btn-danger' href='delete.php?isbn=$buku_data[isbn]'>Delete</a></td></tr>";
+        echo "<td><a class='btn btn-primary' data-bs-target='#update?isbn=$buku_data[isbn]'>Edit</a> | <a class='btn btn-danger' href='delete.php?isbn=$buku_data[isbn]'>Delete</a></td></tr>";
       }
       ?>
     </table>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#tambah">
       Add New
     </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Modal Add -->
+    <div class="modal fade" id="tambah" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New Book</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <form action="../Buku/add.php" method="post">
@@ -160,6 +160,86 @@ $katalog = mysqli_query($connect, "SELECT * FROM katalog");
     </div>
   </div>
 
+  <!-- Modal Edit -->
+    <div class="modal fade" id="update?isbn=$buku_data[isbn]" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="edit.php?isbn=<?php echo $isbn; ?>" method="post">
+            <div class="modal-body">
+              <table class="col-auto" width="25%" border="0">
+                <tr> 
+                <td>ISBN</td>
+                <td style="font-size: 11pt;"><?php echo $isbn; ?> </td>
+                </tr>
+                <tr> 
+                <td>Judul</td>
+                <td><input type="text" name="judul" value="<?php echo $judul; ?>"></td>
+                </tr>
+                <tr> 
+                <td>Tahun</td>
+                <td><input type="text" name="tahun" value="<?php echo $tahun; ?>"></td>
+                </tr>
+                <tr>
+                  <td>Penerbit</td>
+                  <td>
+                    <select name="id_penerbit">
+                      <?php
+                      while ($penerbit_data = mysqli_fetch_array($penerbit)) {
+                        echo "<option value='" . $penerbit_data['id_penerbit'] . "'>" . $penerbit_data['nama_penerbit'] . "</option>";
+                      }
+                      ?>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Pengarang</td>
+                  <td>
+                    <select name="id_pengarang">
+                      <?php
+                      while ($pengarang_data = mysqli_fetch_array($pengarang)) {
+                        echo "<option value='" . $pengarang_data['id_pengarang'] . "'>" . $pengarang_data['nama_pengarang'] . "</option>";
+                      }
+                      ?>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Katalog</td>
+                  <td>
+                    <select name="id_katalog">
+                      <?php
+                      while ($katalog_data = mysqli_fetch_array($katalog)) {
+                        echo "<option value='" . $katalog_data['id_katalog'] . "'>" . $katalog_data['nama'] . "</option>";
+                      }
+                      ?>
+                    </select>
+                  </td>
+                </tr>
+                <tr> 
+                <td>Qty Stok</td>
+                <td><input type="text" name="qty_stok" value="<?php echo $qty_stok; ?>"></td>
+                </tr>
+                <tr> 
+                <td>Harga Pinjam</td>
+                <td><input type="text" name="harga_pinjam" value="<?php echo $harga_pinjam; ?>"></td>
+                </tr>
+                <tr>
+              </table>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" name="submit">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 </body>
