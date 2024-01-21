@@ -152,7 +152,7 @@ $katalog = mysqli_query($connect, "SELECT * FROM katalog");
 
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" name="submit">Add</button>
+              <button type="submit" class="btn btn-primary" name="submit">Add</button>
             </div>
           </form>
         </div>
